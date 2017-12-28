@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 //mongoose schema db
 var blogSchema = new mongoose.Schema({
     title: String,
-    image: {type: String, default: "user_image_default.jpg"},
+    image: {type: String, default: "http://www.teamkrishna.in/images/developer/default_user-2.jpg"},
     body: String,
     created: {
         type: Date,
@@ -26,8 +26,29 @@ var blogSchema = new mongoose.Schema({
 //making a model with the above schema and has methods on it
 var Blog = mongoose.model("Blog", blogSchema);
 
+Blog.create({
+    title: "testing",
+    body: 'i am thrilled'
+});
 
 //RESTFUL ROUTES
+
+
+app.get('/',function(req,res){
+    res.redirect("/blogs");
+});
+//index - get
+app.get('/blogs',function(req,res){
+    // res.render("index");
+    Blog.find({},function(err,Blogs){
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.render("index",{Blogs: Blogs});
+        }
+    });
+});
 
 
 
