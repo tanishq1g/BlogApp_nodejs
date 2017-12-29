@@ -1,0 +1,12 @@
+<% include ./partials/header %>
+
+<div class="container text-center border border-info">
+    <h2 class="text-center card card-body"><%= blog.title %></h2>
+    <img src="<%= blog.image %>">
+    <h6><%= blog.created.toDateString() %></h6>
+    <p>
+        <%= blog.body %>
+    </p>
+</div>
+
+<% include ./partials/footer %>
