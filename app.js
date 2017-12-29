@@ -1,7 +1,8 @@
 var express =require('express'),
     app = express(),
     mongoose = require('mongoose'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    methodOverride = require('method-override');
 
 //to connect mongodb
 mongoose.connect("mongodb://localhost/BlogApp_nodejs");
@@ -11,6 +12,9 @@ app.set('view engine','ejs');
 app.use(express.static("public"));
 //for post routes
 app.use(bodyParser.urlencoded({extended: true}));
+//using method-override and look for _method in url
+app.use(methodOverride('_method'));
+
 
 
 //mongoose schema db
@@ -81,10 +85,11 @@ app.get('/blogs/:id',function(req,res){
     });
 });
 
-//edit -get
+//edit - get
 app.get('/blogs/:id/edit',function(req,res){
     Blog.findById(req.params.id, function(err, foundBlog){
         if(err){
+            console.log("edit route error");
             res.redirect('/blogs');
         }
         else{
@@ -93,8 +98,18 @@ app.get('/blogs/:id/edit',function(req,res){
     });
 });
 
-
-
+//show - put
+app.put('/blogs/:id',function(req,res){
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
+        if(err){
+            console.log(err);
+            res.redirect('/blogs');
+        }
+        else{
+            res.redirect('/blogs/' + req.params.id);
+        }
+    });
+});
 
 app.listen(8081, function(){
     console.log("listening...");

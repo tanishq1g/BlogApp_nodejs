@@ -1,7 +1,7 @@
 <% include ./partials/header %>
 <div class="container">
     <h2 class="text-center card card-body">Edit <%= blog.title %></h2>
-    <form style="width:60%; margin: 25px auto" action="/blogs " method="POST">
+    <form style="width:60%; margin: 25px auto" action="/blogs/<%= blog._id %>?_method=PUT " method="POST">
         <div class="form-group">
             <label for="">Title</label>
             <input class="form-control" type="text" name="blog[title]" value="<%= blog.title %>">
