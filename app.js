@@ -111,6 +111,25 @@ app.put('/blogs/:id',function(req,res){
     });
 });
 
+
+//destroy - delete
+app.delete('/blogs/:id',function(req,res){
+    Blog.findByIdAndRemove(req.params.id,function(err){
+        if(err){
+            console.log(err);
+            res.redirect('/blogs');
+        }
+        else {
+            res.redirect('/blogs');
+        }
+    })
+});
+
+
+
+
+
+
 app.listen(8081, function(){
     console.log("listening...");
 });

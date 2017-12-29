@@ -7,6 +7,10 @@
     <p>
         <%= blog.body %>
     </p>
+    <a class="btn btn-info"  href="/blogs/<%= blog._id %>/edit">Edit</a>
+    <form class style="display:inline"action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">Delete</button>
+    </form>
 </div>
 
 <% include ./partials/footer %>
