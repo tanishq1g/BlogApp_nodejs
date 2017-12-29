@@ -26,10 +26,10 @@ var blogSchema = new mongoose.Schema({
 //making a model with the above schema and has methods on it
 var Blog = mongoose.model("Blog", blogSchema);
 
-Blog.create({
-    title: "testing",
-    body: 'i am thrilled'
-});
+// Blog.create({
+//     title: "testing",
+//     body: 'i am thrilled'
+// });
 
 //RESTFUL ROUTES
 
@@ -37,6 +37,7 @@ Blog.create({
 app.get('/',function(req,res){
     res.redirect("/blogs");
 });
+
 //index - get
 app.get('/blogs',function(req,res){
     // res.render("index");
@@ -46,6 +47,24 @@ app.get('/blogs',function(req,res){
         }
         else{
             res.render("index",{Blogs: Blogs});
+        }
+    });
+});
+
+
+//new - get
+app.get('/blogs/new',function(req,res){
+    res.render('new');
+});
+
+//create - Post
+app.post('/blogs',function(req,res){
+    Blog.create(req.body.blog, function(err,newBlog){
+        if(err){
+            res.render("new");
+        }
+        else{
+            res.redirect('/blogs');
         }
     });
 });
